@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Mac",
+    "age": "4",
+    "description": "A dog that acts like a cat",
+    "image_url": "https://source.unsplash.com/random/900×700/?dog"
+  },
+  {
+    "name": "Walter",
+    "age": "5",
+    "description": "The best boy",
+    "image_url": "https://source.unsplash.com/random/900×700/?dog"
+  },
+  {
+    "name": "Zero",
+    "age": "1",
+    "description": "A kind soul",
+    "image_url": "https://source.unsplash.com/random/900×700/?dog/"
+  },
+  {
+    "name": "Dusty",
+    "age": "2",
+    "description": "Likes to roll around in the dirt",
+    "image_url": "https://source.unsplash.com/random/900×700/?dog"
+  }
+]
