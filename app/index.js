@@ -1,3 +1,4 @@
+import cors from "cors";
 import express from "express";
 import termsData from "./db/terms.json" assert { type: "json" };
 
@@ -5,7 +6,7 @@ import termsData from "./db/terms.json" assert { type: "json" };
 const app = express();
 const port = 3001;
 
-app.get("/api/terms", (req, res) => {
+app.get("/api/terms", cors({ origin: "http://localhost:5173" }), (req, res) => {
   // 'req.query' is an object that comes from the '?student=josh'
   // This will be either 'asc' or 'desc'
   const { sort } = req.query;
