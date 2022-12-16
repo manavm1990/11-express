@@ -4,14 +4,18 @@ import express from "express";
 const app = express();
 const port = 3001;
 
-// We want our express app to use the stuff in 'public' as static assets
-// Static assets are the same for all visitors - nothing personalized or dynamic
-// For any route, express will first check the 'public' directory for a corresponding HTML file.
-app.use(express.static("public"));
+app.get("/", (req, res) => {
+  res.send(
+    `<p>API - An application programming interface, is a computing interface that defines interactions between multiple software intermediaries</p>`
+  );
+});
 
-// Since there is no 'hello.html' in 'public,' express will move down here
-app.use("/hello", (_, res) => {
-  res.send("<p>Hello</p>");
+app.get("/api", (req, res) => {
+  res.json({
+    term: "api",
+    description:
+      "An application programming interface, is a computing interface that defines interactions between multiple software intermediaries",
+  });
 });
 
 app.listen(port, () => {
