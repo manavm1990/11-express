@@ -4,13 +4,13 @@ import express from "express";
 const app = express();
 const port = 3001;
 
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
   res.send(
     `<p>API - An application programming interface, is a computing interface that defines interactions between multiple software intermediaries</p>`
   );
 });
 
-app.get("/api", (req, res) => {
+app.get("/api", (_, res) => {
   res.json({
     term: "api",
     description:
