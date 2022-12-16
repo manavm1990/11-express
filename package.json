@@ -2,6 +2,9 @@
   "private": true,
   "main": "app/index.js",
   "type": "module",
+  "scripts": {
+    "start": "node --watch app/index.js"
+  },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
     "@babel/plugin-syntax-import-assertions": "^7.20.0",
