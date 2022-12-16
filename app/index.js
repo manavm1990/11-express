@@ -5,8 +5,25 @@ import termsData from "./db/terms.json" assert { type: "json" };
 const app = express();
 const port = 3001;
 
-app.get("/api/terms", (_, res) => {
-  res.json(termsData);
+app.get("/api/terms", (req, res) => {
+  // 'req.query' is an object that comes from the '?student=josh'
+  // This will be either 'asc' or 'desc'
+  const { sort } = req.query;
+
+  let ret;
+
+  switch (sort) {
+    case "asc":
+      ret = termsData.sort((a, b) => a.term.localeCompare(b.term));
+      break;
+    case "desc":
+      ret = termsData.sort((a, b) => b.term.localeCompare(a.term));
+      break;
+    default:
+      ret = termsData;
+  }
+
+  res.json(ret);
 });
 
 // The ':' represents a DYNAMIC PARAMETER. (e.g. '/api/terms/WHATEVERIWANT')
