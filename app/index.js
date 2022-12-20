@@ -54,7 +54,14 @@ app.get("/api/reviews", (_, res) => {
   res.json(reviewsData);
 });
 
-// TODO: GET a single review
+app.get("/api/reviews/:id", (req, res) => {
+  const { id } = req.params;
+
+  // Find the review whose 'review_id' matches the id from the DYNAMIC PARAMETER in 'req.params'
+  const requestedReview = reviewsData.find((review) => review.review_id === id);
+
+  res.json(requestedReview);
+});
 
 // TODO: GET request for a specific review's upvotes
 
