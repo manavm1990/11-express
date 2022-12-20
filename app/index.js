@@ -1,7 +1,8 @@
 import cors from "cors";
 import express from "express";
-import termsData from "./db/terms.json" assert { type: "json" };
 import petsData from "./db/pets.json" assert { type: "json" };
+import reviewsData from "./db/reviews.json" assert { type: "json" };
+import termsData from "./db/terms.json" assert { type: "json" };
 
 // Start express
 const app = express();
@@ -49,11 +50,9 @@ app.get("/api/pets", cors({ origin: "http://localhost:5173" }), (_, res) => {
   res.json(petsData);
 });
 
-app.listen(port, () => {
-  console.info("Server running on port 3001");
+app.get("/api/reviews", (_, res) => {
+  res.json(reviewsData);
 });
-
-// TODO: GET request for reviews
 
 // TODO: GET a single review
 
@@ -62,3 +61,7 @@ app.listen(port, () => {
 // TODO: POST request to add a review
 
 // TODO: PUT request to upvote a review
+
+app.listen(port, () => {
+  console.info("Server running on port 3001");
+});
