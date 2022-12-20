@@ -67,7 +67,18 @@ app.get("/api/reviews/:id", (req, res) => {
   }
 });
 
-// TODO: GET request for a specific review's upvotes
+app.get("/api/reviews/:id/upvotes", (req, res) => {
+  const { id } = req.params;
+
+  // Find the review whose 'review_id' matches the id from the DYNAMIC PARAMETER in 'req.params'
+  const requestedReview = reviewsData.find((review) => review.review_id === id);
+
+  if (requestedReview) {
+    res.json({ upvotes: requestedReview.upvotes });
+  } else {
+    res.status(404).json({ error: `Review ${id} not found. :(` });
+  }
+});
 
 // TODO: POST request to add a review
 
