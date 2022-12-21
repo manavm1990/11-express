@@ -117,7 +117,6 @@ app.post("/api/reviews", async (req, res) => {
   }
 });
 
-// TODO: PUT request to upvote a review
 app.put("/api/reviews/:id/upvotes", async (req, res) => {
   const { id } = req.params;
 
