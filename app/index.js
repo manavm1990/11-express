@@ -1,8 +1,14 @@
 import cors from "cors";
 import express from "express";
+import { v4 as uuidv4 } from "uuid";
 import petsData from "./db/pets.json" assert { type: "json" };
 import reviewsData from "./db/reviews.json" assert { type: "json" };
 import termsData from "./db/terms.json" assert { type: "json" };
+
+// Import the 'promises' object from the 'fs' module and rename it to 'fs'
+import { promises as fs } from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 // Start express
 const app = express();
@@ -85,19 +91,30 @@ app.get("/api/reviews/:id/upvotes", (req, res) => {
 app.use(express.json());
 
 // Use this to create a new review
-app.post("/api/reviews", (req, res) => {
+app.post("/api/reviews", async (req, res) => {
   const { product, username, review } = req.body;
 
-  // TODO: Remove any properties from the body that don't belong
-  if (product && username && review) {
-    res.json({ message: "Review added!" });
-  } else {
-    res.status(400).json({ error: "Missing required properties" });
-  }
+  const newReview = {
+    ...req.body,
+    review_id: uuidv4(),
+    upvotes: 0,
+  };
 
-  // TODO: Use fs.writeFile to write the new review to the reviews.json file
-  // If successful, return a 201 status code with a message
-  // If unsuccessful, return a 500 status code with a message
+  try {
+    // TODO: Remove any properties from the body that don't belong
+    if (product && username && review) {
+      await fs.writeFile(
+        `${path.dirname(fileURLToPath(import.meta.url))}/db/reviews.json`,
+        JSON.stringify([...reviewsData, newReview], null, 2),
+        "utf-8"
+      );
+      res.status(201).json({ status: "success", body: newReview });
+    } else {
+      res.status(400).json({ error: "Missing required properties" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: `Something went wrong. ${err.message}` });
+  }
 });
 
 // TODO: PUT request to upvote a review
