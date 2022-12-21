@@ -80,7 +80,25 @@ app.get("/api/reviews/:id/upvotes", (req, res) => {
   }
 });
 
-// TODO: POST request to add a review
+// Add middleware to parse JSON bodies
+// This must be added BEFORE the POST request handler
+app.use(express.json());
+
+// Use this to create a new review
+app.post("/api/reviews", (req, res) => {
+  const { body } = req;
+
+  // TODO: Remove any properties from the body that don't belong
+  if (body.product && body.username && body.review) {
+    res.json({ message: "Review added!" });
+  } else {
+    res.status(400).json({ error: "Missing required properties" });
+  }
+
+  // TODO: Use fs.writeFile to write the new review to the reviews.json file
+  // If successful, return a 201 status code with a message
+  // If unsuccessful, return a 500 status code with a message
+});
 
 // TODO: PUT request to upvote a review
 
