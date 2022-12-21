@@ -21,10 +21,6 @@ const port = 3001;
 // Any requests that come to "/api" will be handled by the router
 app.use("/api", router);
 
-app.get("/api/pets", cors({ origin: "http://localhost:5173" }), (_, res) => {
-  res.json(petsData);
-});
-
 app.get("/api/reviews", (_, res) => {
   res.json(reviewsData);
 });
