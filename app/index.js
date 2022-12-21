@@ -118,6 +118,40 @@ app.post("/api/reviews", async (req, res) => {
 });
 
 // TODO: PUT request to upvote a review
+app.put("/api/reviews/:id/upvotes", async (req, res) => {
+  const { id } = req.params;
+
+  const requestedReview = reviewsData.find((review) => review.review_id === id);
+
+  if (requestedReview) {
+    const updatedReview = {
+      ...requestedReview,
+
+      // This will override what we just spread out
+      upvotes: requestedReview.upvotes + 1,
+    };
+
+    try {
+      await fs.writeFile(
+        `${path.dirname(fileURLToPath(import.meta.url))}/db/reviews.json`,
+        JSON.stringify(
+          reviewsData.map((review) =>
+            // If the review's id matches the id from the DYNAMIC PARAMETER, return the updated review otherwise, keep the review as is
+            review.review_id === id ? updatedReview : review
+          ),
+          null,
+          2
+        ),
+        "utf-8"
+      );
+      res.json(updatedReview);
+    } catch (err) {
+      res.status(500).json({ error: `Something went wrong. ${err.message}` });
+    }
+  } else {
+    res.status(404).json({ error: `Review ${id} not found. :(` });
+  }
+});
 
 app.listen(port, () => {
   console.info("Server running on port 3001");
