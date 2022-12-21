@@ -100,20 +100,20 @@ app.post("/api/reviews", async (req, res) => {
     upvotes: 0,
   };
 
-  try {
-    // TODO: Remove any properties from the body that don't belong
-    if (product && username && review) {
+  // TODO: Remove any properties from the body that don't belong
+  if (product && username && review) {
+    try {
       await fs.writeFile(
         `${path.dirname(fileURLToPath(import.meta.url))}/db/reviews.json`,
         JSON.stringify([...reviewsData, newReview], null, 2),
         "utf-8"
       );
       res.status(201).json({ status: "success", body: newReview });
-    } else {
-      res.status(400).json({ error: "Missing required properties" });
+    } catch (err) {
+      res.status(500).json({ error: `Something went wrong. ${err.message}` });
     }
-  } catch (err) {
-    res.status(500).json({ error: `Something went wrong. ${err.message}` });
+  } else {
+    res.status(400).json({ error: "Missing required properties" });
   }
 });
 
