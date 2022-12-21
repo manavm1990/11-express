@@ -86,10 +86,10 @@ app.use(express.json());
 
 // Use this to create a new review
 app.post("/api/reviews", (req, res) => {
-  const { body } = req;
+  const { product, username, review } = req.body;
 
   // TODO: Remove any properties from the body that don't belong
-  if (body.product && body.username && body.review) {
+  if (product && username && review) {
     res.json({ message: "Review added!" });
   } else {
     res.status(400).json({ error: "Missing required properties" });
